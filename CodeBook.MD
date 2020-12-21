@@ -4,6 +4,7 @@ output: html_notebook
 ---
 
 
+
 The following script prepares, cleans and fixes the data fulfilling 6 main stages
 
 0. Load the required package for the analysis
