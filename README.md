@@ -19,4 +19,3 @@ d. From the data set in step 4, creates a second, independent tidy data set with
 
 6. A folder that includes all the data of the file "Coursera_Final.zip" unzipped.
 
-

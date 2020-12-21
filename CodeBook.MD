@@ -4,8 +4,12 @@ output: html_notebook
 ---
 
 
+<<<<<<< HEAD
 
 The following script prepares, cleans and fixes the data fulfilling 6 main stages
+=======
+The following script prepares, cleans and fixes the data fulfilling 5 main stages
+>>>>>>> 38b14cf4d3a002393f6a91841b9ec28b4208e0e8
 
 0. Load the required package for the analysis
 
@@ -26,6 +30,7 @@ if (!file.exists("UCI HAR Dataset")) {
 }
 ```
 2. Assign each data to variables
+<<<<<<< HEAD
 a. Create the variable features with the file "features.txt", this file has 561 rows and 2 columns. "List of all features"
       
       
@@ -148,3 +153,7 @@ write.table(Final_Data, "FinalData.txt", row.name=FALSE)
 
 
 ``` 
+=======
+
+
+

@@ -70,8 +70,6 @@ names(Final_Data)<-gsub("gravity", "Gravity", names(Final_Data))
 ResumenData <- Final_Data %>% group_by(activity, subject) %>% 
       summarise_all(mean)
 
-
-
 # Create the final document
 write.table(Final_Data, "FinalData.txt", row.name=FALSE)
 
