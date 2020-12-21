@@ -1,6 +1,7 @@
 #Load the required package for the analysis
 
 library(dplyr)
+library(tidyr)
 
 # Download the Information
 
@@ -29,13 +30,13 @@ activities <- read.table("UCI HAR Dataset/activity_labels.txt", col.names = c("c
 subtrain <- read.table("UCI HAR Dataset/train/subject_train.txt", col.names = "subject")
 xtrain <- read.table("UCI HAR Dataset/train/X_train.txt", col.names = features$func)
 ytrain <- read.table("UCI HAR Dataset/train/y_train.txt", col.names = "code")
-ytrain <- merge(ytrain, activities, by.x = "code", by.y = "code", all.x = TRUE)
+ytrain2 <- merge(ytrain, activities, by.x = "code", by.y = "code", all.x = TRUE)
 
 #Start to create the tables to make the test DF
 subtest <- read.table("UCI HAR Dataset/test/subject_test.txt", col.names = "subject")
 xtest <- read.table("UCI HAR Dataset/test/X_test.txt", col.names = features$func)
 ytest <- read.table("UCI HAR Dataset/test/y_test.txt", col.names = "code")
-ytest <- merge(ytest, activities, by.x = "code", by.y = "code", all.x = TRUE)
+ytest2 <- merge(ytest, activities, by.x = "code", by.y = "code", all.x = TRUE)
 
 #Start to merge all data
 AllY <- rbind(ytest,ytrain)
@@ -46,9 +47,11 @@ Project_Data <- cbind(AllSub, AllY, AllX)
 
 
 #Select only the data of Means and STD
-Final_Data <- select(Project_Data,subject, activity, contains("mean"), contains("std"))
+Final_Data <- select(Project_Data,subject, code, contains("mean"), contains("std"))
 
 #Change the names of the data to a description names
+Final_Data$code <- activities[Final_Data$code, 2]
+names(Final_Data)[2] = "activity"
 names(Final_Data)<-gsub("Acc", "Accelerometer", names(Final_Data))
 names(Final_Data)<-gsub("Gyro", "Gyroscope", names(Final_Data))
 names(Final_Data)<-gsub("BodyBody", "Body", names(Final_Data))
@@ -64,8 +67,8 @@ names(Final_Data)<-gsub("gravity", "Gravity", names(Final_Data))
 
 
 #Create the resume group by the 2 variables
-ResumenData <- group_by(Final_Data, activity, subject) 
-ResumenData <- summarise_all(ResumenData, funs(mean)) 
+ResumenData <- Final_Data %>% group_by(activity, subject) %>% 
+      summarise_all(mean)
 
 
 # Create the final document
